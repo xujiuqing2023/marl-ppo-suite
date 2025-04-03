@@ -1,4 +1,4 @@
-name: mappo
+name: marl-ppo-suite
 channels:
   - pytorch
   - conda-forge

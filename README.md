@@ -45,7 +45,7 @@ The goal is to provide readable and straightforward implementations that researc
 2. Create and activate the conda environment:
    ```bash
    conda env create -f environment.yml
-   conda activate multi_agent_rl
+   conda activate marl-ppo-suite
    ```
 
 ### SMAC Installation
@@ -145,15 +145,17 @@ The project began with a simple MLP-based MAPPO implementation for single enviro
 
 #### MAPPO RNN
 
-The RNN implementation follows the MAPPO algorithm as described in the paper ["The Surprising Effectiveness of PPO in Cooperative Multi-Agent Games"](https://arxiv.org/abs/2103.01955) with several improvements:
+The RNN implementation follows the MAPPO algorithm as described in the paper ["The Surprising Effectiveness of PPO in Cooperative Multi-Agent Games"](https://arxiv.org/abs/2103.01955). It addresses partial observability in the SMAC environment, which is crucial for effective multi-agent coordination.
+
+#### Key Features in Both Implementations
+
+Both the MLP and RNN implementations include the following features and improvements:
 
 1. **Value Normalization**: Multiple normalization techniques (Welford, EMA)
 2. **Reward Normalization**: Efficient and EMA-based normalizers
 3. **Coordinated Normalization**: Option to coordinate reward and value normalization (planned)
-4. **RNN Initialization**: Improved initialization for recurrent policies
+4. **Improved Initialization**: Better weight initialization for more stable training
 5. **Learning Rate Scheduling**: Linear learning rate decay
-
-The RNN-based implementation addresses partial observability in the SMAC environment, which is crucial for effective multi-agent coordination.
 
 ### Network Architecture
 
