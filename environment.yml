@@ -1,0 +1,26 @@
+name: mappo
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pytorch>=2.0.0
+  - torchvision
+  - cudatoolkit # For GPU support
+  - pip
+  - pip:
+      # Core dependencies
+      - numpy>=1.20.0
+      - matplotlib
+      - pandas
+      - tensorboard
+
+      # RL environments
+      - pysc2>=3.0.0
+      - smac>=1.0.0
+      - gymnasium
+
+      # Utilities
+      - tqdm # Progress bars
+      - wandb # Optional: Weights & Biases for experiment tracking
