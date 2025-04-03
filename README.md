@@ -38,7 +38,7 @@ The goal is to provide readable and straightforward implementations that researc
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/marl-ppo-suite.git
+   git clone https://github.com/legalaspro/marl-ppo-suite.git
    cd marl-ppo-suite
    ```
 
