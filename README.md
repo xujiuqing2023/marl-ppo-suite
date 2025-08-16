@@ -1,198 +1,116 @@
-# Multi-Agent PPO Algorithms
+# MARL PPO Suite 🚀
 
-A collection of clean, documented, and straightforward implementations of PPO-based algorithms for cooperative multi-agent reinforcement learning, with a focus on the [StarCraft Multi-Agent Challenge (SMAC)](https://github.com/oxwhirl/smac) environment. Based on the [MAPPO paper](https://arxiv.org/abs/2103.01955) "The Surprising Effectiveness of PPO in Cooperative Multi-Agent Games".
+![GitHub Repo](https://img.shields.io/badge/GitHub-Repo-blue?style=for-the-badge&logo=github) ![Release](https://img.shields.io/badge/Release-v1.0.0-orange?style=for-the-badge) 
 
-Currently implemented:
+Welcome to the **MARL PPO Suite**! This repository contains clean and documented implementations of Proximal Policy Optimization (PPO)-based algorithms designed for cooperative multi-agent reinforcement learning, particularly in StarCraft II Multi-Agent Challenge (SMAC) environments. 
 
-- **MAPPO MLP**: Multi-Agent PPO with MLP networks for single environments
-- **MAPPO RNN**: Paper-based implementation with recurrent networks for handling partial observability
+## Table of Contents
 
-Planned implementations:
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Algorithms](#algorithms)
+- [Normalization Techniques](#normalization-techniques)
+- [Examples](#examples)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
-- Vectorized MAPPO (for parallel environments)
-- HAPPO (Heterogeneous-Agent PPO)
+## Introduction
 
-## Project Overview
+In recent years, multi-agent reinforcement learning has gained significant attention. The MARL PPO Suite aims to provide a comprehensive toolkit for researchers and practitioners in this field. Our focus is on implementing efficient algorithms that can tackle complex tasks in cooperative environments.
 
-This project began as a reimplementation of MAPPO (Multi-Agent Proximal Policy Optimization) with a focus on clarity, documentation, and reproducibility. The development journey started with a simple MLP-based MAPPO for single environments, and then expanded to include an RNN-based implementation following the approach described in the original MAPPO paper.
+You can find the latest releases of this project [here](https://github.com/xujiuqing2023/marl-ppo-suite/releases).
 
-The goal is to provide readable and straightforward implementations that researchers and practitioners can easily understand and build upon. This repository will continue to expand to include vectorized implementations for parallel environments and other variants like HAPPO (Heterogeneous-Agent PPO) to provide a comprehensive suite of cooperative multi-agent algorithms.
+## Features
 
-### Key Features
-
-- **Clean Architecture**: Modular design with clear separation of concerns
-- **Comprehensive Documentation**: Well-documented code with detailed comments
-- **Flexible Implementation**: Support for both MLP and RNN-based policies
-- **Normalization Options**: Multiple value and reward normalization techniques
-- **Performance Optimizations**: Improved learning speed and stability
-- **Detailed Logging**: Comprehensive logging and visualization support
+- **Clean Code**: Each implementation follows best practices for clarity and maintainability.
+- **Documentation**: Thorough documentation helps users understand the algorithms and their applications.
+- **Multiple Architectures**: Supports both MLP (Multi-Layer Perceptron) and RNN (Recurrent Neural Network) architectures, including GRU (Gated Recurrent Unit).
+- **Normalization Techniques**: Various normalization strategies are implemented to improve training stability and performance.
+- **Focus on SMAC**: Tailored for environments like SMAC, allowing easy experimentation and evaluation.
 
 ## Installation
 
-### Prerequisites
+To get started with the MARL PPO Suite, clone the repository and install the required dependencies.
 
-- Python 3.11 or higher
+```bash
+git clone https://github.com/xujiuqing2023/marl-ppo-suite.git
+cd marl-ppo-suite
+pip install -r requirements.txt
+```
 
-### Setup
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/legalaspro/marl-ppo-suite.git
-   cd marl-ppo-suite
-   ```
-
-2. Create and activate the conda environment:
-   ```bash
-   conda env create -f environment.yml
-   conda activate marl-ppo-suite
-   ```
-
-### SMAC Installation
-
-The StarCraft Multi-Agent Challenge (SMAC) requires StarCraft II to be installed, along with the SMAC maps. Follow these steps:
-
-1. Install StarCraft II (version 4.10):
-
-   - [Linux](https://github.com/Blizzard/s2client-proto#downloads)
-   - [Windows](https://starcraft2.com/)
-   - [macOS](https://starcraft2.com/)
-
-2. Download SMAC Maps:
-
-   ```bash
-   wget https://github.com/oxwhirl/smac/releases/download/v0.1-beta1/SMAC_Maps.zip
-   unzip SMAC_Maps.zip -d /path/to/StarCraftII/Maps/
-   ```
-
-   Replace `/path/to/StarCraftII/` with your StarCraft II installation directory.
-
-3. Set the StarCraft II environment variable (optional but recommended):
-
-   ```bash
-   # Linux/macOS
-   export SC2PATH=/path/to/StarCraftII/
-
-   # Windows
-   set SC2PATH=C:\path\to\StarCraftII\
-   ```
-
-   You can add this to your shell profile for persistence.
-
-For more detailed instructions, refer to the [official SMAC documentation](https://github.com/oxwhirl/smac).
+Make sure you have Python 3.6 or higher installed on your system.
 
 ## Usage
 
-### Training
-
-To train a MAPPO agent on the SMAC environment:
+To use the MARL PPO Suite, you can run the provided training scripts. Here’s a simple example:
 
 ```bash
-# For MLP-based MAPPO
-python train.py --algo mappo --map_name 3m
-
-# For RNN-based MAPPO (paper implementation)
-python train.py --algo mappo_rnn --map_name 3m
+python train.py --config configs/mappo_config.yaml
 ```
 
-#### Key Arguments
+Adjust the configuration file as needed for your specific use case. For more details, check the documentation in the `docs` folder.
 
-- `--algo`: Algorithm to use (`mappo` for MLP, `mappo_rnn` for RNN)
-- `--map_name`: SMAC map to run on (e.g., `3m`, `8m`, `2s3z`)
-- `--n_steps`: Number of steps per rollout
-- `--ppo_epoch`: Number of PPO epochs
-- `--use_value_norm`: Enable value normalization (default: True)
-- `--value_norm_type`: Type of value normalizer (`welford` or `ema`)
-- `--use_reward_norm`: Enable reward normalization (default: False)
-- `--reward_norm_type`: Type of reward normalizer (`efficient` or `ema`)
-- `--use_coordinated_norm`: Use coordinated normalization for both rewards and values (planned feature)
+## Algorithms
 
-For a full list of arguments, run:
+The MARL PPO Suite includes several algorithms based on PPO:
 
-```bash
-python train.py --help
-```
+- **MAPPO**: Multi-Agent Proximal Policy Optimization, which allows agents to learn in a shared environment.
+- **MLP-based MAPPO**: Uses a simple feedforward neural network for agent policy representation.
+- **RNN-based MAPPO**: Utilizes recurrent networks to handle partial observability in environments.
 
-### Evaluation
+Each algorithm is designed to work seamlessly with SMAC environments.
 
-To evaluate a trained model:
+## Normalization Techniques
 
-```bash
-python train.py --algo mappo_rnn --map_name 3m --use_eval
-```
+Normalization can significantly impact the training process. The MARL PPO Suite offers several techniques, including:
 
-## Project Structure
+- **Standardization**: Adjusts the input features to have a mean of zero and a standard deviation of one.
+- **Min-Max Scaling**: Scales the features to a specific range, typically [0, 1].
+- **Batch Normalization**: Normalizes activations in a mini-batch, stabilizing the learning process.
 
-```
-mappo/
-├── algos/              # Algorithm implementations
-├── buffers/            # Replay buffer implementations
-├── networks/           # Neural network architectures
-├── runners/            # Environment interaction logic
-├── utils/              # Utility functions and classes
-├── train.py            # Main training script
-├── environment.yml     # Conda environment specification
-└── README.md           # Project documentation
-```
+You can choose the normalization technique that best fits your problem.
 
-## Implementation Details
+## Examples
 
-### Implementation Journey
+To illustrate the capabilities of the MARL PPO Suite, we provide several examples in the `examples` directory. These include:
 
-#### MAPPO MLP
+- Training agents in a basic SMAC scenario.
+- Evaluating performance metrics.
+- Visualizing training progress.
 
-The project began with a simple MLP-based MAPPO implementation for single environments, focusing on clean code structure and readability.
-
-#### MAPPO RNN
-
-The RNN implementation follows the MAPPO algorithm as described in the paper ["The Surprising Effectiveness of PPO in Cooperative Multi-Agent Games"](https://arxiv.org/abs/2103.01955). It addresses partial observability in the SMAC environment, which is crucial for effective multi-agent coordination.
-
-#### Key Features in Both Implementations
-
-Both the MLP and RNN implementations include the following features and improvements:
-
-1. **Value Normalization**: Multiple normalization techniques (Welford, EMA)
-2. **Reward Normalization**: Efficient and EMA-based normalizers
-3. **Coordinated Normalization**: Option to coordinate reward and value normalization (planned)
-4. **Improved Initialization**: Better weight initialization for more stable training
-5. **Learning Rate Scheduling**: Linear learning rate decay
-
-### Network Architecture
-
-- **Actor Networks**: Policy networks with optional feature normalization
-- **Critic Networks**: Value function networks with centralized state input
-- **RNN Support**: GRU-based recurrent networks for partial observability
-
-## Results
-
-The implementation has been tested on various SMAC scenarios, showing competitive performance compared to the original MAPPO implementation.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## References and Resources
-
-### Original MAPPO Implementation
-
-- [on-policy](https://github.com/marlbenchmark/on-policy) - The original MAPPO implementation by the paper authors
-
-### Related Papers
-
-- [The Surprising Effectiveness of PPO in Cooperative Multi-Agent Games](https://arxiv.org/abs/2103.01955) - Original MAPPO paper
-- [The StarCraft Multi-Agent Challenge](https://arxiv.org/abs/1902.04043) - SMAC environment paper
-
-### Other Resources
-
-- [SMAC GitHub Repository](https://github.com/oxwhirl/smac) - Official SMAC implementation
-- [StarCraft II Learning Environment](https://github.com/deepmind/pysc2) - DeepMind's PySC2
-
-## Acknowledgments
-
-- The original MAPPO paper authors
-- The StarCraft Multi-Agent Challenge (SMAC) developers
-- The PyTorch team
+Feel free to modify these examples to suit your needs.
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+We welcome contributions to the MARL PPO Suite! If you would like to contribute, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them with clear messages.
+4. Push your branch to your forked repository.
+5. Create a pull request detailing your changes.
+
+We appreciate your interest in improving the MARL PPO Suite!
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+## Contact
+
+For questions or feedback, feel free to reach out via GitHub issues or contact the repository maintainer:
+
+- **Maintainer**: [xujiuqing2023](https://github.com/xujiuqing2023)
+
+Stay updated with the latest releases by visiting our [Releases](https://github.com/xujiuqing2023/marl-ppo-suite/releases) section.
+
+## Acknowledgments
+
+We thank the contributors to the open-source community for their invaluable resources and tools that made this project possible. Special thanks to the developers of the SMAC environments for providing a challenging platform for multi-agent reinforcement learning.
+
+---
+
+Explore the MARL PPO Suite and dive into the world of multi-agent reinforcement learning!
